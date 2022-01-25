@@ -1,8 +1,8 @@
 package at.jlu.beatbuilder;
 
-import at.jlu.beatbuilder.objects.Direction;
-import at.jlu.beatbuilder.objects.GameObject;
-import at.jlu.beatbuilder.objects.PlatformDynamic;
+import at.jlu.beatbuilder.rendertests.Direction;
+import at.jlu.beatbuilder.rendertests.GameObject;
+import at.jlu.beatbuilder.rendertests.PlatformDynamic;
 import org.newdawn.slick.*;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;

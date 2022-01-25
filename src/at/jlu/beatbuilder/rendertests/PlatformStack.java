@@ -1,4 +1,4 @@
-package at.jlu.beatbuilder.objects;
+package at.jlu.beatbuilder.rendertests;
 
 import java.util.ArrayList;
 
