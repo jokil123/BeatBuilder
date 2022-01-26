@@ -1,17 +1,18 @@
 package at.jlu.beatbuilder;
 
-import at.jlu.beatbuilder.rendertests.Direction;
-import at.jlu.beatbuilder.rendertests.GameObject;
-import at.jlu.beatbuilder.rendertests.PlatformDynamic;
+import at.jlu.beatbuilder.beatgame.GameManager;
+import at.jlu.beatbuilder.beatgame.Note;
+import at.jlu.beatbuilder.beatgame.Track;
 import org.newdawn.slick.*;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 
+import java.security.Key;
 import java.util.ArrayList;
 
 public class BeatBuilder extends BasicGame {
-    public ArrayList<GameObject> gameObjects = new ArrayList<>();
+    public GameManager gameManager;
 
     public BeatBuilder() {
         super("BeatBuilder");
@@ -28,21 +29,27 @@ public class BeatBuilder extends BasicGame {
 
     @Override
     public void init(GameContainer container) throws SlickException {
-       gameObjects.add(new PlatformDynamic(Color.red, 0.1f, Direction.RIGHT, 0,100,100, 20));
+        gameManager = new GameManager();
 
+
+        Track track = new Track(Input.KEY_SPACE);
+        track.notes.add(new Note(1));
+
+        ArrayList<Track> tracks = new ArrayList<Track>();
+        tracks.add(track);
+
+        gameManager.beatServer.loadTracks(tracks);
     }
 
     public void update(GameContainer container, int delta) throws SlickException {
-        if (container.getInput().isKeyDown(Input.KEY_SPACE)) {
-
+        gameManager.update(container, delta);
+        if (Math.random() < 0.01){
+            gameManager.beatServer.tracks.get(0).notes.add(new Note(gameManager.songManager.getPlayheadPosition() + 5));
         }
-
-        gameObjects.forEach(gameObject -> gameObject.update(delta));
     }
 
     public void render(GameContainer container, Graphics g) throws SlickException {
-        gameObjects.forEach(gameObject -> gameObject.render(g));
-        g.drawString("FPS: " + container.getFPS(), 50, 50);
+        gameManager.render(container, g);
     }
 
 }

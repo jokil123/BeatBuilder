@@ -1,5 +1,6 @@
 package at.jlu.beatbuilder.beatgame;
 
+import at.jlu.beatbuilder.beatgame.enums.NoteStatus;
 import org.lwjgl.Sys;
 
 import java.util.ArrayList;
@@ -16,15 +17,12 @@ public class Track {
     }
 
     public ArrayList<Note> getMissedNotes(float timeStamp) {
-        return (ArrayList<Note>) notes.stream().filter(note -> note.timeStamp < timeStamp - GameManager.ScoreManager.maxOffset).collect(Collectors.toList());
+        return (ArrayList<Note>) notes.stream().filter(note -> note.timeStamp < timeStamp - GameManager.ScoreManager.maxOffset && note.getStatus() == NoteStatus.NOT_PLAYED).collect(Collectors.toList());
     }
 
     public ArrayList<Note> getHitNotes(float timeStamp) {
         return (ArrayList<Note>) notes.stream().filter(note -> {
-            System.out.println(Math.abs(note.timeStamp - timeStamp));
-            System.out.println(GameManager.ScoreManager.maxOffset);
-            System.out.println(Math.abs(note.timeStamp - timeStamp) < GameManager.ScoreManager.maxOffset);
-            return Math.abs(note.timeStamp - timeStamp) < GameManager.ScoreManager.maxOffset;
+            return Math.abs(note.timeStamp - timeStamp) < GameManager.ScoreManager.maxOffset && note.getStatus() == NoteStatus.NOT_PLAYED;
 
         }).collect(Collectors.toList());
     }
