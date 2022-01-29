@@ -2,10 +2,7 @@ package at.jlu.beatbuilder.beatgame;
 
 import at.jlu.beatbuilder.beatgame.enums.NoteStatus;
 import org.lwjgl.Sys;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
+import org.newdawn.slick.*;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -148,7 +145,7 @@ public class GameManager implements GameAction {
     }
 
     public class BeatServer {
-        public ArrayList<Track> tracks = new ArrayList<Track>();
+        public ArrayList<Track> tracks = new ArrayList<>();
 
         public void scoreMissedNotes(float time) { /*  maybe rename this  */
             for (Track track : tracks) {
@@ -178,4 +175,8 @@ public class GameManager implements GameAction {
             this.tracks = tracks;
         }
     }
+
+    //public class SoundManager {
+        //Music music = new Music();
+    //}
 }

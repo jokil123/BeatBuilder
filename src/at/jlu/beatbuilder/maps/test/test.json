@@ -1,0 +1,19 @@
+{
+  "name": "test",
+  "author": "jo_kil",
+  "description": "test level",
+  "difficulty": 5,
+  "bpm": 110,
+  "version": "0.1",
+  "key": "C#",
+
+  "tags": ["debug", "stuff"],
+  "beatData": [
+    {
+      "beats": [ 1, 3, 5, 7, 9 ]
+    },
+    {
+      "beats": [ 2, 4, 6, 7, 10 ]
+    }
+  ]
+}

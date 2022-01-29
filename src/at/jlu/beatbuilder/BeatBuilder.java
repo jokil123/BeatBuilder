@@ -43,7 +43,7 @@ public class BeatBuilder extends BasicGame {
 
     public void update(GameContainer container, int delta) throws SlickException {
         gameManager.update(container, delta);
-        if (Math.random() < 0.01){
+        if (Math.random() < 0.05){
             gameManager.beatServer.tracks.get(0).notes.add(new Note(gameManager.songManager.getPlayheadPosition() + 5));
         }
     }
