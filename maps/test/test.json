@@ -3,7 +3,7 @@
   "author": "jo_kil",
   "description": "test level",
   "difficulty": 5,
-  "bpm": 110,
+  "bpm": 110.0,
   "version": "0.1",
   "key": "C#",
 

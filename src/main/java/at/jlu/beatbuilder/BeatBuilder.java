@@ -1,5 +1,6 @@
 package at.jlu.beatbuilder;
 
+import at.jlu.beatbuilder.beatgame.beatmaps.BeatMap;
 import at.jlu.beatbuilder.beatgame.GameManager;
 import at.jlu.beatbuilder.beatgame.Note;
 import at.jlu.beatbuilder.beatgame.Track;
@@ -30,6 +31,8 @@ public class BeatBuilder extends BasicGame {
 
     @Override
     public void init(GameContainer container) throws SlickException {
+        BeatMap bm = new BeatMap("test");
+
         gameManager = new GameManager();
 
 
@@ -44,7 +47,7 @@ public class BeatBuilder extends BasicGame {
 
     public void update(GameContainer container, int delta) throws SlickException {
         gameManager.update(container, delta);
-        if (Math.random() < 0.05){
+        if (Math.random() < 0.05) {
             gameManager.beatServer.tracks.get(0).notes.add(new Note(gameManager.songManager.getPlayheadPosition() + 5));
         }
     }
