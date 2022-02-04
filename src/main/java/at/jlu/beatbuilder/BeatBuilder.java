@@ -3,12 +3,13 @@ package at.jlu.beatbuilder;
 import at.jlu.beatbuilder.beatgame.GameManager;
 import at.jlu.beatbuilder.beatgame.Note;
 import at.jlu.beatbuilder.beatgame.Track;
+
+
 import org.newdawn.slick.*;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 
-import java.security.Key;
 import java.util.ArrayList;
 
 public class BeatBuilder extends BasicGame {

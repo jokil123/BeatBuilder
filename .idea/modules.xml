@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/slickLeer.iml" filepath="$PROJECT_DIR$/.idea/slickLeer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BeatBuilder.iml" filepath="$PROJECT_DIR$/BeatBuilder.iml" />
     </modules>
   </component>
 </project>
