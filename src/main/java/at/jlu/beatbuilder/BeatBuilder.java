@@ -1,9 +1,9 @@
 package at.jlu.beatbuilder;
 
-import at.jlu.beatbuilder.beatgame.beatmaps.BeatMap;
-import at.jlu.beatbuilder.beatgame.GameManager;
-import at.jlu.beatbuilder.beatgame.Note;
 import at.jlu.beatbuilder.beatgame.Track;
+import at.jlu.beatbuilder.beatmap.BeatMap;
+import at.jlu.beatbuilder.beatgame.PlayManager;
+import at.jlu.beatbuilder.beatgame.Note;
 
 
 import org.newdawn.slick.*;
@@ -14,7 +14,7 @@ import org.newdawn.slick.GameContainer;
 import java.util.ArrayList;
 
 public class BeatBuilder extends BasicGame {
-    public GameManager gameManager;
+    public PlayManager gameManager;
 
     public BeatBuilder() {
         super("BeatBuilder");
@@ -33,13 +33,15 @@ public class BeatBuilder extends BasicGame {
     public void init(GameContainer container) throws SlickException {
         BeatMap bm = new BeatMap("test");
 
-        gameManager = new GameManager();
+        bm.getBeatmapMusic().play();
+
+        gameManager = new PlayManager();
 
 
         Track track = new Track(Input.KEY_SPACE);
         track.notes.add(new Note(1));
 
-        ArrayList<Track> tracks = new ArrayList<Track>();
+        ArrayList<Track> tracks = new ArrayList<>();
         tracks.add(track);
 
         gameManager.beatServer.loadTracks(tracks);

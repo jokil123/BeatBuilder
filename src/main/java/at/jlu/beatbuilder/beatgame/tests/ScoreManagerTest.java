@@ -1,13 +1,12 @@
 package at.jlu.beatbuilder.beatgame.tests;
 
-import at.jlu.beatbuilder.beatgame.GameManager;
-import org.newdawn.slick.Game;
+import at.jlu.beatbuilder.beatgame.PlayManager;
 
 public class ScoreManagerTest {
     public static void main(String[] args) {
-        GameManager gm = new GameManager();
+        PlayManager gm = new PlayManager();
 
-        GameManager.ScoreManager sm = gm.scoreManager;
+        PlayManager.ScoreManager sm = gm.scoreManager;
 
         System.out.println(sm.getScore() + "; " + sm.getScoreMultiplier());
 

@@ -1,6 +1,6 @@
 package at.jlu.beatbuilder.beatgame.tests;
 
-import at.jlu.beatbuilder.beatgame.GameManager;
+import at.jlu.beatbuilder.beatgame.PlayManager;
 import at.jlu.beatbuilder.beatgame.Note;
 import at.jlu.beatbuilder.beatgame.Track;
 import org.newdawn.slick.Input;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class GameManagerTest {
     public static void main(String[] args) {
-        GameManager gm = new GameManager();
+        PlayManager gm = new PlayManager();
 
         Track testTrack = new Track(Input.KEY_SPACE);
         testTrack.notes.add(new Note(1));

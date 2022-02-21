@@ -1,0 +1,25 @@
+{
+  "name": "test",
+  "author": "jo_kil",
+  "description": "test level",
+  "difficulty": 5,
+  "bpm": 110.0,
+  "version": "0.1",
+  "key": "C#",
+  "tags": [
+    "debug",
+    "stuff"
+  ],
+  "tracks": 2,
+  "beatData": [
+    {
+      "timestamp": 0.0,
+      "track": 0
+    },
+    {
+      "timestamp": 1.0,
+      "track": 1,
+      "noteType": "STREAM"
+    }
+  ]
+}

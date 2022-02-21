@@ -1,6 +1,6 @@
 package at.jlu.beatbuilder.beatgame;
 
-import at.jlu.beatbuilder.beatgame.enums.NoteStatus;
+import at.jlu.beatbuilder.enums.NoteStatus;
 
 public class Note {
     public float timeStamp;
