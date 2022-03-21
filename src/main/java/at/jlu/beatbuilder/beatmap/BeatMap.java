@@ -1,10 +1,9 @@
 package at.jlu.beatbuilder.beatmap;
 
-import at.jlu.beatbuilder.enums.NoteType;
+import at.jlu.beatbuilder.gameobjects.LevelObject;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 
-//import com.google.gson.JsonParser;
 import com.google.gson.*;
 
 import java.io.IOException;
@@ -29,48 +28,42 @@ public class BeatMap {
 
     public int tracks;
 
-    public ArrayList<BeatMapNote> notes = new ArrayList<>();
+    public ArrayList<LevelObject> notes = new ArrayList<>();
 
     public Music getBeatmapMusic() throws SlickException {
         return new Music("maps/" + name + "/audio.wav");
     }
 
-    public BeatMap(String beatMapName) {
-        try {
-            Gson gson = new Gson();
-            Reader reader = Files.newBufferedReader(Paths.get("maps/" + beatMapName + "/data.json"));
-            Map<?, ?> map = gson.fromJson(reader, Map.class);
+    public BeatMap(String beatMapName) throws IOException {
+        Gson gson = new Gson();
+        Reader reader = Files.newBufferedReader(Paths.get("maps/" + beatMapName + "/data.json"));
+        Map<?, ?> map = gson.fromJson(reader, Map.class);
 
-            this.name = beatMapName;
-            this.author = (String) map.get("author");
-            this.description = (String) map.get("description");
-            this.difficulty = (float) ((double) map.get("difficulty"));
-            this.bpm = (float) (double) map.get("bpm");
-            this.version = (String) map.get("version");
-            this.key = (String) map.get("key");
+        this.name = beatMapName;
+        this.author = (String) map.get("author");
+        this.description = (String) map.get("description");
+        this.difficulty = (float) ((double) map.get("difficulty"));
+        this.bpm = (float) (double) map.get("bpm");
+        this.version = (String) map.get("version");
+        this.key = (String) map.get("key");
 
-            this.tags = (ArrayList<String>) map.get("tags");
+        this.tags = (ArrayList<String>) map.get("tags");
 
-            this.tracks = (int) (double) map.get("tracks");
+        this.tracks = (int) (double) map.get("tracks");
 
-            for (var note : (ArrayList<Map<?, ?>>) map.get("beatData")) {
-                float timestamp = (float) (double) note.get("timestamp");
-                float hold = note.get("hold") != null ? (float) (double) note.get("hold") : 0;
+        for (var note : (ArrayList<Map<?, ?>>) map.get("beatData")) {
+            float timestamp = (float) (double) note.get("timestamp");
 
-
-                int track = (int) (double) note.get("timestamp");
-                if (track > tracks - 1) {
-                    throw new RuntimeException("Track out of bounds");
-                }
-
-                NoteType noteType = note.get("noteType") != null ? NoteType.valueOf((String) note.get("noteType")) : NoteType.SINGLE;
-
-                notes.add(new BeatMapNote(noteType, timestamp, hold, track));
+            int track = (int) (double) note.get("timestamp");
+            if (track > tracks - 1) {
+                throw new RuntimeException("Track out of bounds");
             }
 
-            reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+            float hold = note.get("hold") != null ? (float) (double) note.get("hold") : 0;
+
+            new Note(notes, track, timestamp, hold);
         }
+
+        reader.close();
     }
 }

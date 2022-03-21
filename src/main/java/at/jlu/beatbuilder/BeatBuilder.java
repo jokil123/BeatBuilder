@@ -1,61 +1,37 @@
 package at.jlu.beatbuilder;
 
-import at.jlu.beatbuilder.beatgame.Track;
-import at.jlu.beatbuilder.beatmap.BeatMap;
-import at.jlu.beatbuilder.beatgame.PlayManager;
-import at.jlu.beatbuilder.beatgame.Note;
-
-
-import org.newdawn.slick.*;
+import at.jlu.beatbuilder.applicationstates.BeatBuilderLevel;
+import at.jlu.beatbuilder.applicationstates.MainMenu;
+import at.jlu.beatbuilder.applicationstates.SplashScreen;
 import org.newdawn.slick.AppGameContainer;
-import org.newdawn.slick.BasicGame;
-import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.state.StateBasedGame;
 
-import java.util.ArrayList;
+public class BeatBuilder extends StateBasedGame {
+    public static final int SPLASHSCREEN = 0;
+    public static final int MAINMENU = 1;
+    public static final int LEVEL = 2;
 
-public class BeatBuilder extends BasicGame {
-    public PlayManager gameManager;
-
-    public BeatBuilder() {
-        super("BeatBuilder");
-    }
-
-    public static void main(String[] args) throws SlickException {
-        AppGameContainer container = new AppGameContainer(new BeatBuilder());
-        container.setDisplayMode(800, 600, false);
-        container.setMinimumLogicUpdateInterval(25);
-        container.setTargetFrameRate(120);
-        container.setShowFPS(true);
-        container.start();
+    public BeatBuilder(String title) {
+        super(title);
     }
 
     @Override
-    public void init(GameContainer container) throws SlickException {
-        BeatMap bm = new BeatMap("test");
-
-        bm.getBeatmapMusic().play();
-
-        gameManager = new PlayManager();
-
-
-        Track track = new Track(Input.KEY_SPACE);
-        track.notes.add(new Note(1));
-
-        ArrayList<Track> tracks = new ArrayList<>();
-        tracks.add(track);
-
-        gameManager.beatServer.loadTracks(tracks);
+    public void initStatesList(org.newdawn.slick.GameContainer gc) throws SlickException {
+        addState(new SplashScreen());
+        addState(new MainMenu());
+        addState(new BeatBuilderLevel());
     }
 
-    public void update(GameContainer container, int delta) throws SlickException {
-        gameManager.update(container, delta);
-        if (Math.random() < 0.05) {
-            gameManager.beatServer.tracks.get(0).notes.add(new Note(gameManager.songManager.getPlayheadPosition() + 5));
+    public static void main(String[] args) {
+        try {
+            org.newdawn.slick.AppGameContainer appgc = new AppGameContainer(new BeatBuilder("BeatBuilder"));
+            appgc.setDisplayMode(800, 600, false);
+            appgc.setVSync(true);
+            appgc.setShowFPS(false);
+            appgc.start();
+        } catch (SlickException e) {
+            e.printStackTrace();
         }
     }
-
-    public void render(GameContainer container, Graphics g) throws SlickException {
-        gameManager.render(container, g);
-    }
-
 }

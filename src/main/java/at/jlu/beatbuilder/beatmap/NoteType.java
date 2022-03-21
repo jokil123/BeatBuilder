@@ -1,4 +1,4 @@
-package at.jlu.beatbuilder.enums;
+package at.jlu.beatbuilder.beatmap;
 
 public enum NoteType {
     SINGLE,
