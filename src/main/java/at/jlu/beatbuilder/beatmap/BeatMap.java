@@ -54,14 +54,14 @@ public class BeatMap {
         for (var note : (ArrayList<Map<?, ?>>) map.get("beatData")) {
             float timestamp = (float) (double) note.get("timestamp");
 
-            int track = (int) (double) note.get("timestamp");
+            int track = (int) (double) note.get("track");
             if (track > tracks - 1) {
                 throw new RuntimeException("Track out of bounds");
             }
 
             float hold = note.get("hold") != null ? (float) (double) note.get("hold") : 0;
 
-            new Note(notes, track, timestamp, hold);
+            new Note(notes, track, timestamp * 1000, hold * 1000);
         }
 
         reader.close();

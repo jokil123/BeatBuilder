@@ -7,6 +7,7 @@ import at.jlu.beatbuilder.gameobjects.LevelObject;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 
 import java.util.ArrayList;
 
@@ -18,17 +19,20 @@ public class Note extends LevelObject {
 
     int track;
 
+    float hitImperfection = 0;
+
     public Note(ArrayList<LevelObject> gameObjects, int track, float timeStamp, float hold) {
         super(gameObjects);
         this.track = track;
         this.timeStamp = timeStamp;
-        this.hold = 0;
 
         this.state = NoteState.NOT_PLAYED;
 
         if (hold == 0) {
+            this.hold = 0;
             this.type = NoteType.SINGLE;
         } else {
+            this.hold = hold;
             this.type = NoteType.STREAM;
         }
     }
@@ -55,24 +59,52 @@ public class Note extends LevelObject {
 
     @Override
     public void render(GameContainer gc, Graphics g, BeatBuilderLevel level, float levelTime) {
-        float noteX = (timeStamp * 100 - levelTime * 0.1f * level.playManager.getNoteSpeedMultiplier());
+        float noteX = ((timeStamp - levelTime) * level.playManager.getNoteSpeedMultiplier());
         noteX = track == 0 ? noteX : noteX * -1;
         noteX += gc.getWidth() / 2f;
 
         float noteY = track * 100;
-        float noteWidth = (hold != 0 ? hold : 1) * 10;
+        float noteWidth = (hold != 0 ? hold : 50) * level.playManager.getNoteSpeedMultiplier();
         float noteHeight = 100;
 
         g.setColor(getDrawColor());
-        g.fillRect(noteX, noteY, noteWidth, noteHeight);
+
+        if (track == 0) {
+            g.fillRect(noteX, noteY, noteWidth, noteHeight);
+        } else {
+            g.fillRect(noteX - noteWidth, noteY, noteWidth, noteHeight);
+        }
+
     }
 
     @Override
     public void update(GameContainer gc, int delta, BeatBuilderLevel level, float levelTime) {
+        float maxOffset = 100f;
+
         switch (state) {
             case NOT_PLAYED:
+                if (Math.abs(levelTime - timeStamp) < maxOffset) {
+                    if (gc.getInput().isKeyDown(Input.KEY_SPACE)) {
+                        state = NoteState.PLAYING;
+                        hitImperfection += Math.abs(levelTime - timeStamp);
+                    }
+                }
+
+                if (levelTime - (timeStamp) > maxOffset) {
+                    state = NoteState.MISSED;
+                }
+
                 break;
             case PLAYING:
+                if (hold == 0) {
+                    state = NoteState.PLAYED;
+                }
+
+                if (!gc.getInput().isKeyDown(Input.KEY_SPACE) || levelTime - (timeStamp + hold) > maxOffset) {
+                    state = NoteState.PLAYED;
+                    hitImperfection += Math.max(Math.abs(levelTime - timeStamp), maxOffset);
+                }
+
                 break;
             case PLAYED:
                 break;
@@ -82,25 +114,11 @@ public class Note extends LevelObject {
     }
 
     public Color getDrawColor() {
-        Color color;
-
-        switch (state) {
-            case NOT_PLAYED:
-                color = Color.white;
-                break;
-            case PLAYING:
-                color = Color.blue;
-                break;
-            case PLAYED:
-                color = Color.darkGray;
-                break;
-            case MISSED:
-                color = Color.red;
-                break;
-            default:
-                color = Color.white;
-        }
-
-        return color;
+        return switch (state) {
+            case NOT_PLAYED -> Color.white;
+            case PLAYING -> Color.blue;
+            case PLAYED -> Color.darkGray;
+            case MISSED -> Color.red;
+        };
     }
 }

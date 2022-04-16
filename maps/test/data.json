@@ -13,12 +13,12 @@
   "tracks": 2,
   "beatData": [
     {
-      "timestamp": 0.0,
+      "timestamp": 2,
       "track": 0
     },
     {
-      "timestamp": 1.0,
-      "hold": 0.5,
+      "timestamp": 3,
+      "hold": 2,
       "track": 1
     }
   ]

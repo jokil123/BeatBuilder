@@ -1,10 +1,7 @@
 package at.jlu.beatbuilder.applicationstates;
 
 import org.lwjgl.Sys;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -17,12 +14,12 @@ public class MainMenu extends BasicGameState {
     public ArrayList<String> levelList;
 
     @Override
-    public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
+    public void init(GameContainer gc, StateBasedGame sbg) {
         levelList = findLevels();
     }
 
     @Override
-    public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
+    public void render(GameContainer gc, StateBasedGame sbg, Graphics g) {
         g.setColor(Color.darkGray);
         g.fillRect(0, 0, gc.getWidth(), gc.getHeight());
 
@@ -34,12 +31,12 @@ public class MainMenu extends BasicGameState {
     }
 
     @Override
-    public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
-        if (gc.getInput().isKeyPressed(gc.getInput().KEY_1)) {
+    public void update(GameContainer gc, StateBasedGame sbg, int delta) {
+        if (gc.getInput().isKeyPressed(Input.KEY_1)) {
             ((BeatBuilderLevel) sbg.getState(2)).loadLevel(levelList.get(0), sbg);
-        } else if (gc.getInput().isKeyPressed(gc.getInput().KEY_2)) {
-            ((BeatBuilderLevel) sbg.getState(2)).loadLevel(levelList.get(1), sbg);
-        }
+        } // else if (gc.getInput().isKeyPressed(gc.getInput().KEY_2)) {
+//            ((BeatBuilderLevel) sbg.getState(2)).loadLevel(levelList.get(1), sbg);
+//        }
     }
 
     @Override
@@ -52,8 +49,14 @@ public class MainMenu extends BasicGameState {
 
         File[] directories = new File("maps/").listFiles(File::isDirectory);
 
-        for (File directory : directories) {
-            levelList.add(directory.getName());
+        try {
+            assert directories != null;
+            for (File directory : directories) {
+                levelList.add(directory.getName());
+            }
+        } catch (NullPointerException e) {
+            System.out.println("No maps found");
+            return new ArrayList<>();
         }
 
         return levelList;

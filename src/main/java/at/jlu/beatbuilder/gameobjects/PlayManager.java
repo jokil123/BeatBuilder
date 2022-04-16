@@ -1,6 +1,8 @@
 package at.jlu.beatbuilder.gameobjects;
 
 import at.jlu.beatbuilder.applicationstates.BeatBuilderLevel;
+import at.jlu.beatbuilder.eventListeners.PausePlayState;
+import at.jlu.beatbuilder.eventListeners.UnpausePlayState;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
@@ -9,7 +11,10 @@ import java.util.ArrayList;
 public class PlayManager extends LevelObject {
     boolean isPlaying = true;
     float currentTime = 0;
-    float noteSpeedMultiplier = 1f;
+    float noteSpeedMultiplier = 0.1f;
+
+    ArrayList<PausePlayState> pauseHandlers = new ArrayList<>();
+    ArrayList<UnpausePlayState> unpauseHandlers = new ArrayList<>();
 
     public PlayManager(ArrayList<LevelObject> levelObjectList) {
         super(levelObjectList);
@@ -35,15 +40,15 @@ public class PlayManager extends LevelObject {
         isPlaying = true;
     }
 
+    public void togglePause() {
+        isPlaying = !isPlaying;
+    }
+
     public float getCurrentTime() {
         return currentTime;
     }
 
     public float getNoteSpeedMultiplier() {
         return noteSpeedMultiplier;
-    }
-
-    public void reset() {
-        currentTime = 0;
     }
 }
