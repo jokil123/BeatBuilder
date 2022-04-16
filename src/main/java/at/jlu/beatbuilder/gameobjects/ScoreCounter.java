@@ -42,12 +42,12 @@ public class ScoreCounter extends LevelObject {
     }
 
     @Override
-    public void render(GameContainer gc, Graphics g, BeatBuilderLevel level) {
+    public void render(GameContainer gc, Graphics g, BeatBuilderLevel level, float levelTime) {
         g.drawString("Score: " + score, 10, 10);
     }
 
     @Override
-    public void update(GameContainer gc, int delta, BeatBuilderLevel level) {
+    public void update(GameContainer gc, int delta, BeatBuilderLevel level, float levelTime) {
 
     }
 }

@@ -9,19 +9,19 @@ import java.util.ArrayList;
 public class PlayManager extends LevelObject {
     boolean isPlaying = true;
     float currentTime = 0;
-    float noteSpeedMultiplier = 1;
+    float noteSpeedMultiplier = 1f;
 
     public PlayManager(ArrayList<LevelObject> levelObjectList) {
         super(levelObjectList);
     }
 
     @Override
-    public void render(GameContainer gc, Graphics g, BeatBuilderLevel level) {
+    public void render(GameContainer gc, Graphics g, BeatBuilderLevel level, float levelTime) {
 
     }
 
     @Override
-    public void update(GameContainer gc, int delta, BeatBuilderLevel level) {
+    public void update(GameContainer gc, int delta, BeatBuilderLevel level, float levelTime) {
         if (isPlaying) {
             currentTime += delta;
         }
@@ -37,6 +37,10 @@ public class PlayManager extends LevelObject {
 
     public float getCurrentTime() {
         return currentTime;
+    }
+
+    public float getNoteSpeedMultiplier() {
+        return noteSpeedMultiplier;
     }
 
     public void reset() {

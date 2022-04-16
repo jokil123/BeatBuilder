@@ -13,7 +13,7 @@ public abstract class LevelObject {
         levelObjectList.add(this);
     }
 
-    abstract public void render(GameContainer gc, Graphics g, BeatBuilderLevel level);
+    abstract public void render(GameContainer gc, Graphics g, BeatBuilderLevel level, float levelTime);
 
-    abstract public void update(GameContainer gc, int delta, BeatBuilderLevel level);
+    abstract public void update(GameContainer gc, int delta, BeatBuilderLevel level, float levelTime);
 }
