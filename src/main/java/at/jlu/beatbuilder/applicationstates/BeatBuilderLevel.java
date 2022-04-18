@@ -69,14 +69,17 @@ public class BeatBuilderLevel extends BasicGameState {
         this.scoreCounter = new ScoreCounter(gameObjects);
         this.playManager = new PlayManager(gameObjects);
 
-        SpawnNotes();
+        spawnNotes();
 
         new CenterBar(gameObjects, 2, Color.red);
+
+        new Building(gameObjects);
+
 
         System.out.println("Loaded level: " + levelName);
     }
 
-    private void SpawnNotes() {
+    private void spawnNotes() {
         gameObjects.addAll(levelBeatMap.notes);
     }
 
