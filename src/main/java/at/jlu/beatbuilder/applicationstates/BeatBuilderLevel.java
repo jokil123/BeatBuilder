@@ -19,6 +19,8 @@ public class BeatBuilderLevel extends BasicGameState {
 
     public ScoreCounter scoreCounter;
 
+    public Building building;
+
     public ArrayList<LevelObject> gameObjects = new ArrayList<>();
 
     @Override
@@ -31,7 +33,7 @@ public class BeatBuilderLevel extends BasicGameState {
         gameObjects.forEach(gameObject -> gameObject.render(gc, g, this, playManager.getCurrentTime()));
 
         g.drawString("Level: " + levelBeatMap.name, 10, 25);
-        g.drawString("Time: " + playManager.getCurrentTime(), 10, 25+15);
+        g.drawString("Time: " + playManager.getCurrentTime(), 10, 25 + 15);
     }
 
     @Override
@@ -56,7 +58,7 @@ public class BeatBuilderLevel extends BasicGameState {
         this.sbg = sbg;
 
         try {
-            this.levelBeatMap = new BeatMap(levelName);
+            levelBeatMap = new BeatMap(levelName);
         } catch (IOException e) {
             System.out.println("Could not load beatmap, beatmap does not exist");
             return;
@@ -66,14 +68,14 @@ public class BeatBuilderLevel extends BasicGameState {
 
 //        new ParalaxBackground(gameObjects);
 
-        this.scoreCounter = new ScoreCounter(gameObjects);
-        this.playManager = new PlayManager(gameObjects);
+        scoreCounter = new ScoreCounter(gameObjects);
+        playManager = new PlayManager(gameObjects);
 
         spawnNotes();
 
         new CenterBar(gameObjects, 2, Color.red);
 
-        new Building(gameObjects);
+        building = new Building(gameObjects);
 
 
         System.out.println("Loaded level: " + levelName);
