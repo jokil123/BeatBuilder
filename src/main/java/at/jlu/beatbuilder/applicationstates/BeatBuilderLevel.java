@@ -73,7 +73,7 @@ public class BeatBuilderLevel extends BasicGameState {
 
         spawnNotes();
 
-        new CenterBar(gameObjects, 2, Color.red);
+        new CenterBar(gameObjects);
 
         building = new Building(gameObjects);
 

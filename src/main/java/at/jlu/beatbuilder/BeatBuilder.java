@@ -17,7 +17,7 @@ public class BeatBuilder extends StateBasedGame {
     }
 
     @Override
-    public void initStatesList(org.newdawn.slick.GameContainer gc) throws SlickException {
+    public void initStatesList(org.newdawn.slick.GameContainer gc) {
         addState(new SplashScreen());
         addState(new MainMenu());
         addState(new BeatBuilderLevel());

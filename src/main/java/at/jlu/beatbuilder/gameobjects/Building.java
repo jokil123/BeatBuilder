@@ -10,11 +10,11 @@ import java.util.ArrayList;
 
 public class Building extends LevelObject {
     private static final float xOffset = 200f;
-    private static final float startWidth = 500f;
+    private static final float startWidth = 300f;
 
     private float lastSurfaceArea;
 
-    private ArrayList<LevelObject> floorsList = new ArrayList<>();
+    private final ArrayList<LevelObject> floorsList = new ArrayList<>();
 
     public Building(ArrayList<LevelObject> levelObjectList) {
         super(levelObjectList);
@@ -41,6 +41,16 @@ public class Building extends LevelObject {
     public void update(GameContainer gc, int delta, BeatBuilderLevel level, float levelTime) {
         if (gc.getInput().isKeyPressed(Input.KEY_O)) {
             lastSurfaceArea = addFloor((float) (Math.random() * 100 - 50), (float)Math.random() * 200f);
+        }
+    }
+
+    public Floor getLastFloor() {
+        try {
+            return (Floor)floorsList.get(floorsList.size() - 1);
+        }
+        catch (IndexOutOfBoundsException e) {
+            addFloor(0, startWidth);
+            return getLastFloor();
         }
     }
 

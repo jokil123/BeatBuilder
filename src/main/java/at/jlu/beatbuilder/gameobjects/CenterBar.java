@@ -8,19 +8,22 @@ import org.newdawn.slick.Graphics;
 import java.util.ArrayList;
 
 public class CenterBar extends LevelObject {
-    float width;
-    Color color;
+    float width = 2f;
 
-    public CenterBar(ArrayList<LevelObject> levelObjectList, float width, Color color) {
+    public CenterBar(ArrayList<LevelObject> levelObjectList) {
         super(levelObjectList);
-        this.width = width;
-        this.color = color;
     }
 
     @Override
     public void render(GameContainer gc, Graphics g, BeatBuilderLevel level, float levelTime) {
-        g.setColor(color);
-        g.fillRect(gc.getWidth() / 2 - width / 2, 0, width, gc.getHeight());
+        g.setColor(Color.red);
+        g.fillRect(gc.getWidth() / 2f - width / 2f, 0, width, gc.getHeight());
+
+        Floor lastFloor = level.building.getLastFloor();
+
+        g.setColor(Color.orange);
+        g.fillRect(gc.getWidth() / 2f - width / 2f + lastFloor.rightPosition(), 0, width, gc.getHeight());
+        g.fillRect(gc.getWidth() / 2f - width / 2f + lastFloor.leftPosition(), 0, width, gc.getHeight());
     }
 
     @Override

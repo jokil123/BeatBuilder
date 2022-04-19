@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class PlayManager extends LevelObject {
     boolean isPlaying = true;
     float currentTime = 0;
-    float noteSpeedMultiplier = 0.1f;
+    float noteSpeedMultiplier = 0.5f;
 
     ArrayList<PausePlayState> pauseHandlers = new ArrayList<>();
     ArrayList<UnpausePlayState> unpauseHandlers = new ArrayList<>();

@@ -12,7 +12,7 @@ public class Floor extends LevelObject{
 
     private Color color;
 
-    private float leftPosition, rightPosition;
+    private final float leftPosition, rightPosition;
     private float yPosition;
 
     public Floor(ArrayList<LevelObject> levelObjectList, float leftPosition, float rightPosition) {
@@ -47,7 +47,7 @@ public class Floor extends LevelObject{
     }
 
     public float getWidth() {
-        return leftPosition + rightPosition;
+        return rightPosition - leftPosition;
     }
 
     public void setColor(Color color) {
