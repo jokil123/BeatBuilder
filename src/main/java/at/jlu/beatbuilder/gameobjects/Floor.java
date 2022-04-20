@@ -7,7 +7,7 @@ import org.newdawn.slick.Graphics;
 
 import java.util.ArrayList;
 
-public class Floor extends LevelObject{
+public class Floor extends LevelObject {
     static final float FLOOR_HEIGHT = 100f;
 
     private Color color;
@@ -26,7 +26,11 @@ public class Floor extends LevelObject{
     public void render(GameContainer gc, Graphics g, BeatBuilderLevel level, float levelTime) {
         g.setColor(color);
         g.setLineWidth(2.5f);
-        g.drawRect((gc.getWidth() / 2f) + leftPosition, yPosition,  rightPosition - leftPosition, FLOOR_HEIGHT);
+        g.drawRect((gc.getWidth() / 2f) + leftPosition, yPosition, getWidth(), FLOOR_HEIGHT);
+
+        g.setColor(Color.red);
+        g.setLineWidth(1f);
+        g.drawRect(getXPosition() + gc.getWidth() / 2f - 0.5f, yPosition, 1, FLOOR_HEIGHT);
     }
 
     @Override
@@ -52,5 +56,9 @@ public class Floor extends LevelObject{
 
     public void setColor(Color color) {
         this.color = color;
+    }
+
+    public float getXPosition() {
+        return rightPosition - getWidth() / 2f;
     }
 }

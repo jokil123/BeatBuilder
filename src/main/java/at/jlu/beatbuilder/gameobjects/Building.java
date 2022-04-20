@@ -27,7 +27,7 @@ public class Building extends LevelObject {
         g.drawString("Surface area: " + lastSurfaceArea, 100, 140);
 
         for (int i = 0; i < floorsList.size(); i++) {
-            Floor floor = (Floor)floorsList.get((floorsList.size() - 1) - i);
+            Floor floor = (Floor) floorsList.get((floorsList.size() - 1) - i);
 
             float val = (float) i / 4;
             floor.setColor(new Color(val, 1 - val, 0.5f));
@@ -40,29 +40,34 @@ public class Building extends LevelObject {
     @Override
     public void update(GameContainer gc, int delta, BeatBuilderLevel level, float levelTime) {
         if (gc.getInput().isKeyPressed(Input.KEY_O)) {
-            lastSurfaceArea = addFloor((float) (Math.random() * 100 - 50), (float)Math.random() * 200f);
+            lastSurfaceArea = addFloor((float) (Math.random() * 100 - 50), (float) Math.random() * 200f);
         }
     }
 
     public Floor getLastFloor() {
         try {
-            return (Floor)floorsList.get(floorsList.size() - 1);
-        }
-        catch (IndexOutOfBoundsException e) {
-            addFloor(0, startWidth);
-            return getLastFloor();
+            return (Floor) floorsList.get(floorsList.size() - 1);
+        } catch (IndexOutOfBoundsException e) {
+            if (floorsList.size() == 0) {
+                new Floor(floorsList, -startWidth / 2, startWidth / 2);
+                return getLastFloor();
+            } else {
+                throw e;
+            }
         }
     }
 
     // returns new surface area
     public float addFloor(float xPosition /* center (+ => right) */, float width) {
-        float newFloorLeftPosition = xPosition - width / 2;
-        float newFloorRightPosition = xPosition + width / 2;
+        float relativeXPosition = xPosition + getLastFloor().getXPosition();
+
+        float newFloorLeftPosition = relativeXPosition - width / 2;
+        float newFloorRightPosition = relativeXPosition + width / 2;
 
         float oldFloorLeftPosition, oldFloorRightPosition;
 
         try {
-            Floor oldFloor = ((Floor)floorsList.get(floorsList.size() - 1));
+            Floor oldFloor = ((Floor) floorsList.get(floorsList.size() - 1));
 
             oldFloorLeftPosition = oldFloor.leftPosition();
             oldFloorRightPosition = oldFloor.rightPosition();
@@ -71,8 +76,11 @@ public class Building extends LevelObject {
             oldFloorRightPosition = startWidth / 2;
         }
 
-        float leftPosition = Math.min(Math.max(newFloorLeftPosition, oldFloorLeftPosition), 0);
-        float rightPosition = Math.max(Math.min(newFloorRightPosition, oldFloorRightPosition), 0);
+//        newFloorLeftPosition -= oldFloorLeftPosition;
+//        newFloorRightPosition -= oldFloorRightPosition;
+
+        float leftPosition = Math.max(newFloorLeftPosition, oldFloorLeftPosition);
+        float rightPosition = Math.min(newFloorRightPosition, oldFloorRightPosition);
 
         if (newFloorLeftPosition > oldFloorRightPosition || newFloorRightPosition < oldFloorLeftPosition) {
             return 0;

@@ -70,6 +70,9 @@ public class Note extends LevelObject {
             noteX += lastFloor.rightPosition();
             g.fillRect(noteX - noteWidth, noteY, noteWidth, noteHeight);
         }
+
+        g.setColor(Color.red);
+        g.fillRect(getNoteX(levelTime, level) + gc.getWidth() / 2f, noteY, 1, noteHeight);
     }
 
     @Override

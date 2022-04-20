@@ -68,6 +68,8 @@ public class BeatBuilderLevel extends BasicGameState {
 
 //        new ParalaxBackground(gameObjects);
 
+        new Grid(gameObjects);
+
         scoreCounter = new ScoreCounter(gameObjects);
         playManager = new PlayManager(gameObjects);
 
