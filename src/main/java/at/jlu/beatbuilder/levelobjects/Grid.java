@@ -1,4 +1,4 @@
-package at.jlu.beatbuilder.gameobjects;
+package at.jlu.beatbuilder.levelobjects;
 
 import at.jlu.beatbuilder.applicationstates.BeatBuilderLevel;
 import org.newdawn.slick.Color;
@@ -14,12 +14,12 @@ public class Grid extends LevelObject {
 
     Color gridColor = new Color(1, 1, 1, 0.251f);
 
-    public Grid(ArrayList<LevelObject> levelObjectList) {
-        super(levelObjectList);
+    public Grid(ArrayList<LevelObject> levelObjectList, BeatBuilderLevel level) {
+        super(levelObjectList, level);
     }
 
     @Override
-    public void render(GameContainer gc, Graphics g, BeatBuilderLevel level, float levelTime) {
+    public void render(GameContainer gc, Graphics g) {
         g.setColor(gridColor);
 
         for (float x = 0; x < gc.getWidth(); x += spacingX) {
@@ -34,7 +34,7 @@ public class Grid extends LevelObject {
     }
 
     @Override
-    public void update(GameContainer gc, int delta, BeatBuilderLevel level, float levelTime) {
+    public void update(GameContainer gc, int delta) {
 
     }
 }

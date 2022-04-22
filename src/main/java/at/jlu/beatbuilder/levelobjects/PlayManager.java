@@ -1,4 +1,4 @@
-package at.jlu.beatbuilder.gameobjects;
+package at.jlu.beatbuilder.levelobjects;
 
 import at.jlu.beatbuilder.applicationstates.BeatBuilderLevel;
 import at.jlu.beatbuilder.eventListeners.PausePlayState;
@@ -9,24 +9,26 @@ import org.newdawn.slick.Graphics;
 import java.util.ArrayList;
 
 public class PlayManager extends LevelObject {
-    boolean isPlaying = true;
-    float currentTime = 0;
-    float noteSpeedMultiplier = 0.5f;
+    private boolean isPlaying = true;
+    private float currentTime = 0;
+    private final float noteSpeedMultiplier = 0.5f;
+    private final float floorGraceTime = 10f;
+    private static final float startWidth = 300f;
 
     ArrayList<PausePlayState> pauseHandlers = new ArrayList<>();
     ArrayList<UnpausePlayState> unpauseHandlers = new ArrayList<>();
 
-    public PlayManager(ArrayList<LevelObject> levelObjectList) {
-        super(levelObjectList);
+    public PlayManager(ArrayList<LevelObject> levelObjectList, BeatBuilderLevel level) {
+        super(levelObjectList, level);
     }
 
     @Override
-    public void render(GameContainer gc, Graphics g, BeatBuilderLevel level, float levelTime) {
+    public void render(GameContainer gc, Graphics g) {
 
     }
 
     @Override
-    public void update(GameContainer gc, int delta, BeatBuilderLevel level, float levelTime) {
+    public void update(GameContainer gc, int delta) {
         if (isPlaying) {
             currentTime += delta;
         }
@@ -50,5 +52,25 @@ public class PlayManager extends LevelObject {
 
     public float getNoteSpeedMultiplier() {
         return noteSpeedMultiplier;
+    }
+
+    public boolean getIsPlaying() {
+        return isPlaying;
+    }
+
+    public float getFloorGraceTime() {
+        return floorGraceTime;
+    }
+
+    public float getStartWidth() {
+        return startWidth;
+    }
+
+    public float timeToPixel(float time) {
+        return time * getNoteSpeedMultiplier();
+    }
+
+    public float calculateHealth() {
+        return level.building.getLastFloor().getWidth() / startWidth;
     }
 }

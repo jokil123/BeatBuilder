@@ -1,7 +1,6 @@
-package at.jlu.beatbuilder.gameobjects;
+package at.jlu.beatbuilder.levelobjects;
 
 import at.jlu.beatbuilder.applicationstates.BeatBuilderLevel;
-import org.lwjgl.Sys;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
@@ -13,8 +12,8 @@ public class ScoreCounter extends LevelObject {
 
     private final float scoreMultiplierIncrement = 0.1f;
 
-    public ScoreCounter(ArrayList<LevelObject> levelObjectList) {
-        super(levelObjectList);
+    public ScoreCounter(ArrayList<LevelObject> levelObjectList, BeatBuilderLevel level) {
+        super(levelObjectList, level);
     }
 
     public int getScore() {
@@ -42,12 +41,12 @@ public class ScoreCounter extends LevelObject {
     }
 
     @Override
-    public void render(GameContainer gc, Graphics g, BeatBuilderLevel level, float levelTime) {
+    public void render(GameContainer gc, Graphics g) {
         g.drawString("Score: " + score, 10, 10);
     }
 
     @Override
-    public void update(GameContainer gc, int delta, BeatBuilderLevel level, float levelTime) {
+    public void update(GameContainer gc, int delta) {
 
     }
 }

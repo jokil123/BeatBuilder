@@ -1,7 +1,8 @@
 package at.jlu.beatbuilder.applicationstates;
 
+import at.jlu.beatbuilder.BeatBuilder;
 import at.jlu.beatbuilder.beatmap.BeatMap;
-import at.jlu.beatbuilder.gameobjects.*;
+import at.jlu.beatbuilder.levelobjects.*;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -30,35 +31,37 @@ public class BeatBuilderLevel extends BasicGameState {
 
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) {
-        gameObjects.forEach(gameObject -> gameObject.render(gc, g, this, playManager.getCurrentTime()));
+        gameObjects.forEach(gameObject -> gameObject.render(gc, g));
 
         g.drawString("Level: " + levelBeatMap.name, 10, 25);
         g.drawString("Time: " + playManager.getCurrentTime(), 10, 25 + 15);
     }
 
     @Override
-    public void update(GameContainer gc, StateBasedGame sbg, int delta) {
-        gameObjects.forEach(gameObject -> gameObject.update(gc, delta, this, playManager.getCurrentTime()));
+    public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
+        gameObjects.forEach(gameObject -> gameObject.update(gc, delta));
         // scoreCounter.addScore(10);
 
-        gc.getInput();
         if (gc.getInput().isKeyPressed(Input.KEY_R)) {
             reset();
         }
 
-        gc.getInput();
         if (gc.getInput().isKeyPressed(Input.KEY_P)) {
             playManager.togglePause();
         }
+
+        if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE)) {
+            sbg.enterState(BeatBuilder.MAINMENU);
+        }
     }
 
-    public void loadLevel(String levelName, StateBasedGame sbg) {
+    public void loadLevel(String levelName, StateBasedGame sbg) throws SlickException {
         clearLevel();
 
         this.sbg = sbg;
 
         try {
-            levelBeatMap = new BeatMap(levelName);
+            levelBeatMap = new BeatMap(levelName, this);
         } catch (IOException e) {
             System.out.println("Could not load beatmap, beatmap does not exist");
             return;
@@ -66,19 +69,20 @@ public class BeatBuilderLevel extends BasicGameState {
 
         sbg.enterState(BeatBuilderLevel.ID);
 
-//        new ParalaxBackground(gameObjects);
+//        new ParallaxBackground(gameObjects);
 
-        new Grid(gameObjects);
+        new Grid(gameObjects, this);
 
-        scoreCounter = new ScoreCounter(gameObjects);
-        playManager = new PlayManager(gameObjects);
+        scoreCounter = new ScoreCounter(gameObjects, this);
+        playManager = new PlayManager(gameObjects, this);
 
         spawnNotes();
 
-        new CenterBar(gameObjects);
+        new CenterBar(gameObjects, this);
 
-        building = new Building(gameObjects);
+        building = new Building(gameObjects, this);
 
+        new HealthDisplay(gameObjects, this);
 
         System.out.println("Loaded level: " + levelName);
     }
@@ -87,7 +91,7 @@ public class BeatBuilderLevel extends BasicGameState {
         gameObjects.addAll(levelBeatMap.notes);
     }
 
-    public void reset() {
+    public void reset() throws SlickException {
         loadLevel(levelBeatMap.name, sbg);
     }
 

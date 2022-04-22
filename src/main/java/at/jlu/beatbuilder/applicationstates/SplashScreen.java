@@ -8,7 +8,7 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class SplashScreen extends BasicGameState {
-    public static final int ID = 1;
+    public static final int ID = 0;
 
     @Override
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {

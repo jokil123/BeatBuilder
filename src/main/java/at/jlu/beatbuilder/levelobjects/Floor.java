@@ -1,4 +1,4 @@
-package at.jlu.beatbuilder.gameobjects;
+package at.jlu.beatbuilder.levelobjects;
 
 import at.jlu.beatbuilder.applicationstates.BeatBuilderLevel;
 import org.newdawn.slick.Color;
@@ -15,15 +15,15 @@ public class Floor extends LevelObject {
     private final float leftPosition, rightPosition;
     private float yPosition;
 
-    public Floor(ArrayList<LevelObject> levelObjectList, float leftPosition, float rightPosition) {
-        super(levelObjectList);
+    public Floor(ArrayList<LevelObject> levelObjectList, BeatBuilderLevel level, float leftPosition, float rightPosition) {
+        super(levelObjectList, level);
 
         this.leftPosition = leftPosition;
         this.rightPosition = rightPosition;
     }
 
     @Override
-    public void render(GameContainer gc, Graphics g, BeatBuilderLevel level, float levelTime) {
+    public void render(GameContainer gc, Graphics g) {
         g.setColor(color);
         g.setLineWidth(2.5f);
         g.drawRect((gc.getWidth() / 2f) + leftPosition, yPosition, getWidth(), FLOOR_HEIGHT);
@@ -34,7 +34,7 @@ public class Floor extends LevelObject {
     }
 
     @Override
-    public void update(GameContainer gc, int delta, BeatBuilderLevel level, float levelTime) {
+    public void update(GameContainer gc, int delta) {
 
     }
 

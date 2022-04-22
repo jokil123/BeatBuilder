@@ -3,10 +3,9 @@ package at.jlu.beatbuilder.beatmap;
 import at.jlu.beatbuilder.applicationstates.BeatBuilderLevel;
 import at.jlu.beatbuilder.enums.NoteState;
 import at.jlu.beatbuilder.enums.NoteType;
-import at.jlu.beatbuilder.gameobjects.Building;
-import at.jlu.beatbuilder.gameobjects.Floor;
-import at.jlu.beatbuilder.gameobjects.LevelObject;
-import org.lwjgl.Sys;
+import at.jlu.beatbuilder.levelobjects.Building;
+import at.jlu.beatbuilder.levelobjects.Floor;
+import at.jlu.beatbuilder.levelobjects.LevelObject;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -24,8 +23,9 @@ public class Note extends LevelObject {
 
     float hitImperfection = 0;
 
-    public Note(ArrayList<LevelObject> gameObjects, int track, float timeStamp, float hold) {
-        super(gameObjects);
+    public Note(ArrayList<LevelObject> gameObjects, BeatBuilderLevel level, int track, float timeStamp, float hold) {
+        super(gameObjects, level);
+
         this.track = track;
         this.timeStamp = timeStamp;
 
@@ -41,10 +41,10 @@ public class Note extends LevelObject {
     }
 
     @Override
-    public void render(GameContainer gc, Graphics g, BeatBuilderLevel level, float levelTime) {
+    public void render(GameContainer gc, Graphics g) {
         Floor lastFloor = level.building.getLastFloor();
 
-        float noteX = getNoteX(levelTime, level);
+        float noteX = getNoteX();
         noteX = track == 0 ? noteX : noteX * -1;
         noteX += gc.getWidth() / 2f;
 
@@ -72,23 +72,23 @@ public class Note extends LevelObject {
         }
 
         g.setColor(Color.red);
-        g.fillRect(getNoteX(levelTime, level) + gc.getWidth() / 2f, noteY, 1, noteHeight);
+        g.fillRect(getNoteX() + gc.getWidth() / 2f, noteY, 1, noteHeight);
     }
 
     @Override
-    public void update(GameContainer gc, int delta, BeatBuilderLevel level, float levelTime) {
+    public void update(GameContainer gc, int delta) {
         float maxOffset = 500f;
 
         switch (state) {
             case NOT_PLAYED:
-                if (Math.abs(levelTime - timeStamp) < maxOffset) {
+                if (Math.abs(level.playManager.getCurrentTime() - timeStamp) < maxOffset) {
                     if (gc.getInput().isKeyDown(Input.KEY_SPACE)) {
                         state = NoteState.PLAYING;
-                        hitImperfection += Math.abs(levelTime - timeStamp);
+                        hitImperfection += Math.abs(level.playManager.getCurrentTime() - timeStamp);
                     }
                 }
 
-                if (levelTime - (timeStamp) > maxOffset) {
+                if (level.playManager.getCurrentTime() - (timeStamp) > maxOffset) {
                     state = NoteState.MISSED;
                 }
 
@@ -96,13 +96,13 @@ public class Note extends LevelObject {
             case PLAYING:
                 if (hold == 0) {
                     state = NoteState.PLAYED;
-                    notePlayedEvent(gc, delta, level, levelTime);
+                    notePlayedEvent(gc, delta);
                 }
 
-                if (!gc.getInput().isKeyDown(Input.KEY_SPACE) || levelTime - (timeStamp + hold) > maxOffset) {
+                if (!gc.getInput().isKeyDown(Input.KEY_SPACE) || level.playManager.getCurrentTime() - (timeStamp + hold) > maxOffset) {
                     state = NoteState.PLAYED;
-                    hitImperfection += Math.max(Math.abs(levelTime - timeStamp), maxOffset);
-                    notePlayedEvent(gc, delta, level, levelTime);
+                    hitImperfection += Math.max(Math.abs(level.playManager.getCurrentTime() - timeStamp), maxOffset);
+                    notePlayedEvent(gc, delta);
                 }
 
                 break;
@@ -112,17 +112,17 @@ public class Note extends LevelObject {
         }
     }
 
-    private void notePlayedEvent(GameContainer gc, int delta, BeatBuilderLevel level, float levelTime) {
+    private void notePlayedEvent(GameContainer gc, int delta) {
         Floor lastFloor = level.building.getLastFloor();
         Building building = level.building;
 
-        float xPosition = getNoteX(levelTime, level);
+        float xPosition = getNoteX();
 
         building.addFloor(xPosition, lastFloor.getWidth());
     }
 
-    private float getNoteX(float levelTime, BeatBuilderLevel level) {
-        return ((timeStamp - levelTime) * level.playManager.getNoteSpeedMultiplier());
+    private float getNoteX() {
+        return ((timeStamp - level.playManager.getCurrentTime()) * level.playManager.getNoteSpeedMultiplier());
     }
 
     public Color getDrawColor() {

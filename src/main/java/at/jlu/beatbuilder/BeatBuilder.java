@@ -1,6 +1,7 @@
 package at.jlu.beatbuilder;
 
 import at.jlu.beatbuilder.applicationstates.BeatBuilderLevel;
+import at.jlu.beatbuilder.applicationstates.DelayConfig;
 import at.jlu.beatbuilder.applicationstates.MainMenu;
 import at.jlu.beatbuilder.applicationstates.SplashScreen;
 import org.newdawn.slick.AppGameContainer;
@@ -11,6 +12,7 @@ public class BeatBuilder extends StateBasedGame {
     public static final int SPLASHSCREEN = 0;
     public static final int MAINMENU = 1;
     public static final int LEVEL = 2;
+    public static final int DELAY_CONFIG = 3;
 
     public BeatBuilder(String title) {
         super(title);
@@ -21,6 +23,7 @@ public class BeatBuilder extends StateBasedGame {
         addState(new SplashScreen());
         addState(new MainMenu());
         addState(new BeatBuilderLevel());
+        addState(new DelayConfig());
     }
 
     public static void main(String[] args) {

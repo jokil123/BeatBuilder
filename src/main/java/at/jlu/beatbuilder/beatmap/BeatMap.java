@@ -1,6 +1,7 @@
 package at.jlu.beatbuilder.beatmap;
 
-import at.jlu.beatbuilder.gameobjects.LevelObject;
+import at.jlu.beatbuilder.applicationstates.BeatBuilderLevel;
+import at.jlu.beatbuilder.levelobjects.LevelObject;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 
@@ -14,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class BeatMap {
+    public BeatBuilderLevel level;
+
     public String name;
     public String author;
     public String description;
@@ -34,7 +37,7 @@ public class BeatMap {
         return new Music("maps/" + name + "/audio.wav");
     }
 
-    public BeatMap(String beatMapName) throws IOException {
+    public BeatMap(String beatMapName, BeatBuilderLevel level) throws IOException {
         Gson gson = new Gson();
         Reader reader = Files.newBufferedReader(Paths.get("maps/" + beatMapName + "/data.json"));
         Map<?, ?> map = gson.fromJson(reader, Map.class);
@@ -61,7 +64,7 @@ public class BeatMap {
 
             float hold = note.get("hold") != null ? (float) (double) note.get("hold") : 0;
 
-            new Note(notes, track, timestamp * 1000, hold * 1000);
+            new Note(notes, level, track, timestamp * 1000, hold * 1000);
         }
 
         reader.close();

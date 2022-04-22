@@ -1,4 +1,4 @@
-package at.jlu.beatbuilder.gameobjects;
+package at.jlu.beatbuilder.levelobjects;
 
 import at.jlu.beatbuilder.applicationstates.BeatBuilderLevel;
 import at.jlu.beatbuilder.eventListeners.PausePlayState;

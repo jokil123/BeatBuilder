@@ -1,5 +1,6 @@
 package at.jlu.beatbuilder.applicationstates;
 
+import at.jlu.beatbuilder.BeatBuilder;
 import org.lwjgl.Sys;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
@@ -31,12 +32,16 @@ public class MainMenu extends BasicGameState {
     }
 
     @Override
-    public void update(GameContainer gc, StateBasedGame sbg, int delta) {
+    public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
         if (gc.getInput().isKeyPressed(Input.KEY_1)) {
-            ((BeatBuilderLevel) sbg.getState(2)).loadLevel(levelList.get(0), sbg);
+            ((BeatBuilderLevel) sbg.getState(BeatBuilder.LEVEL)).loadLevel(levelList.get(0), sbg);
         } // else if (gc.getInput().isKeyPressed(gc.getInput().KEY_2)) {
 //            ((BeatBuilderLevel) sbg.getState(2)).loadLevel(levelList.get(1), sbg);
 //        }
+
+        if (gc.getInput().isKeyPressed(Input.KEY_G)) {
+            sbg.enterState(BeatBuilder.DELAY_CONFIG);
+        }
     }
 
     @Override

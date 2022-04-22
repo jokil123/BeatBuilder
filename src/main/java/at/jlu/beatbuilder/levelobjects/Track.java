@@ -1,4 +1,4 @@
-package at.jlu.beatbuilder.gameobjects;
+package at.jlu.beatbuilder.levelobjects;
 
 public class Track {
     float trackPositionX;
