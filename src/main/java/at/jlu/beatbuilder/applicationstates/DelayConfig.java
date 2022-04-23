@@ -10,7 +10,11 @@ public class DelayConfig extends BasicGameState {
     private float delay;
 
     private float cursorPosition;
-    private float cursorSpeed;
+    private float cursorSpeed = 10;
+
+    private float time;
+
+    private float hitTime;
 
     @Override
     public int getID() {
@@ -41,16 +45,26 @@ public class DelayConfig extends BasicGameState {
     }
 
     @Override
-    public void update(GameContainer gc, StateBasedGame sbg, int i) throws SlickException {
+    public void update(GameContainer gc, StateBasedGame sbg, int d) throws SlickException {
+        time += d;
+
         if (gc.getInput().isKeyPressed(Input.KEY_ESCAPE)) {
             sbg.enterState(MainMenu.ID);
         }
 
-        if (cursorPosition > gc.getWidth() / 2f) {
+        if (cursorPosition > gc.getWidth() / 2f + 200) {
             cursorPosition = -gc.getWidth() / 2f;
 
         } else {
             cursorPosition += cursorSpeed;
+        }
+
+        if (Math.abs(cursorPosition) <= cursorSpeed) {
+
+        }
+
+        if (gc.getInput().isKeyPressed(Input.KEY_SPACE)) {
+            hitTime = time;
         }
     }
 }
