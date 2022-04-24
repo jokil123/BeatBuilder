@@ -31,7 +31,13 @@ public class BeatBuilderLevel extends BasicGameState {
 
     @Override
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) {
-        gameObjects.forEach(gameObject -> gameObject.render(gc, g));
+        gameObjects.forEach(gameObject -> {
+            try {
+                gameObject.render(gc, g);
+            } catch (SlickException e) {
+                e.printStackTrace();
+            }
+        });
 
         g.drawString("Level: " + levelBeatMap.name, 10, 25);
         g.drawString("Time: " + playManager.getCurrentTime(), 10, 25 + 15);
@@ -39,8 +45,13 @@ public class BeatBuilderLevel extends BasicGameState {
 
     @Override
     public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
-        gameObjects.forEach(gameObject -> gameObject.update(gc, delta));
-        // scoreCounter.addScore(10);
+        gameObjects.forEach(gameObject -> {
+            try {
+                gameObject.update(gc, delta);
+            } catch (SlickException e) {
+                e.printStackTrace();
+            }
+        });
 
         if (gc.getInput().isKeyPressed(Input.KEY_R)) {
             reset();
@@ -70,6 +81,8 @@ public class BeatBuilderLevel extends BasicGameState {
         sbg.enterState(BeatBuilderLevel.ID);
 
 //        new ParallaxBackground(gameObjects);
+
+        new Sky(gameObjects, this);
 
         new Grid(gameObjects, this);
 

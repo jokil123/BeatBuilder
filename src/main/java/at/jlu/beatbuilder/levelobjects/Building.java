@@ -1,10 +1,7 @@
 package at.jlu.beatbuilder.levelobjects;
 
 import at.jlu.beatbuilder.applicationstates.BeatBuilderLevel;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
+import org.newdawn.slick.*;
 
 import java.util.ArrayList;
 
@@ -28,8 +25,7 @@ public class Building extends LevelObject {
         for (int i = 0; i < floorsList.size(); i++) {
             Floor floor = (Floor) floorsList.get((floorsList.size() - 1) - i);
 
-            float val = (float) i / 4;
-            floor.setColor(new Color(val, 1 - val, 0.5f));
+            // floor.setColor(new Color((float)Math.random() * 0.25f + 0.5f, (float)Math.random() * 0.25f + 0.5f, (float)Math.random() * 0.25f + 0.5f));
             floor.setYPosition(i * Floor.FLOOR_HEIGHT + xOffset);
 
             floor.render(gc, g);
@@ -37,13 +33,13 @@ public class Building extends LevelObject {
     }
 
     @Override
-    public void update(GameContainer gc, int delta) {
+    public void update(GameContainer gc, int delta) throws SlickException {
         if (gc.getInput().isKeyPressed(Input.KEY_O)) {
             lastSurfaceArea = addFloor((float) (Math.random() * 100 - 50), (float) Math.random() * 200f);
         }
     }
 
-    public Floor getLastFloor() {
+    public Floor getLastFloor() throws SlickException {
         try {
             return (Floor) floorsList.get(floorsList.size() - 1);
         } catch (IndexOutOfBoundsException e) {
@@ -57,7 +53,7 @@ public class Building extends LevelObject {
     }
 
     // returns new surface area
-    public float addFloor(float xPosition /* center (+ => right) */, float width) {
+    public float addFloor(float xPosition /* center (+ => right) */, float width) throws SlickException {
         float relativeXPosition = xPosition + getLastFloor().getXPosition();
 
         float newFloorLeftPosition = relativeXPosition - width / 2;

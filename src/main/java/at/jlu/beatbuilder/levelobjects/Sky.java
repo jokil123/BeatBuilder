@@ -1,25 +1,26 @@
 package at.jlu.beatbuilder.levelobjects;
 
 import at.jlu.beatbuilder.applicationstates.BeatBuilderLevel;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
 import java.util.ArrayList;
 
-public class HealthDisplay extends LevelObject {
-
-    public HealthDisplay(ArrayList<LevelObject> levelObjectList, BeatBuilderLevel level) {
+public class Sky extends LevelObject {
+    public Sky(ArrayList<LevelObject> levelObjectList, BeatBuilderLevel level) {
         super(levelObjectList, level);
     }
 
     @Override
     public void render(GameContainer gc, Graphics g) throws SlickException {
-        g.drawString("Health: " + Math.round(level.playManager.calculateHealth() * 100000f) / 1000f + "%", 25, gc.getHeight() - 25);
+        g.setColor(new Color(135, 206, 235));
+        g.fillRect(0, 0, gc.getWidth(), gc.getHeight());
     }
 
     @Override
-    public void update(GameContainer gc, int delta) {
+    public void update(GameContainer gc, int delta) throws SlickException {
 
     }
 }

@@ -4,19 +4,28 @@ import at.jlu.beatbuilder.BeatBuilder;
 import org.lwjgl.Sys;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.GameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import java.io.File;
 import java.util.ArrayList;
 
-public class MainMenu extends BasicGameState {
+public class MainMenu extends BasicGameState implements MusicListener {
     public static final int ID = 1;
+
+    private Music music;
 
     public ArrayList<String> levelList;
 
     @Override
-    public void init(GameContainer gc, StateBasedGame sbg) {
+    public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
         levelList = findLevels();
+
+        music = new Music("audio/title_music_intro.wav");
+        music.play();
+        music.setVolume(0);
+        music.fade(5000, BeatBuilder.MUSIC_VOLUME, false);
+        music.addListener(this);
     }
 
     @Override
@@ -65,5 +74,46 @@ public class MainMenu extends BasicGameState {
         }
 
         return levelList;
+    }
+
+    @Override
+    public void musicEnded(Music music) {
+        music.removeListener(this);
+
+        try {
+            music = new Music("audio/title_music_loop.wav");
+        } catch (SlickException e) {
+            e.printStackTrace();
+        }
+
+        music.loop();
+        music.setVolume(BeatBuilder.MUSIC_VOLUME);
+    }
+
+    @Override
+    public void musicSwapped(Music music, Music music1) {};
+
+    @Override
+    public void leave(GameContainer gc, StateBasedGame sbg) throws SlickException {
+        System.out.println(sbg.getCurrentStateID());
+        System.out.println("Leaving MainMenu: " + this.getID());
+
+        /*
+        if (sbg.getCurrentStateID() == BeatBuilder.LEVEL) {
+            music.fade(500, 0, false);
+        }
+        */
+    }
+
+    @Override
+    public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
+        System.out.println(sbg.getCurrentStateID());
+        System.out.println("Entering MainMenu: " + this.getID());
+
+        /*
+        if (sbg.getCurrentStateID() == BeatBuilder.LEVEL) {
+            music.fade(500, 0, false);
+        }
+        */
     }
 }

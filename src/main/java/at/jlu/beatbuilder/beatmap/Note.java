@@ -6,10 +6,7 @@ import at.jlu.beatbuilder.enums.NoteType;
 import at.jlu.beatbuilder.levelobjects.Building;
 import at.jlu.beatbuilder.levelobjects.Floor;
 import at.jlu.beatbuilder.levelobjects.LevelObject;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
+import org.newdawn.slick.*;
 
 import java.util.ArrayList;
 
@@ -41,7 +38,7 @@ public class Note extends LevelObject {
     }
 
     @Override
-    public void render(GameContainer gc, Graphics g) {
+    public void render(GameContainer gc, Graphics g) throws SlickException {
         Floor lastFloor = level.building.getLastFloor();
 
         float noteX = getNoteX();
@@ -76,7 +73,7 @@ public class Note extends LevelObject {
     }
 
     @Override
-    public void update(GameContainer gc, int delta) {
+    public void update(GameContainer gc, int delta) throws SlickException {
         float maxOffset = 500f;
 
         switch (state) {
@@ -112,7 +109,7 @@ public class Note extends LevelObject {
         }
     }
 
-    private void notePlayedEvent(GameContainer gc, int delta) {
+    private void notePlayedEvent(GameContainer gc, int delta) throws SlickException {
         Floor lastFloor = level.building.getLastFloor();
         Building building = level.building;
 

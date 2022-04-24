@@ -5,6 +5,7 @@ import at.jlu.beatbuilder.eventListeners.PausePlayState;
 import at.jlu.beatbuilder.eventListeners.UnpausePlayState;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 
 import java.util.ArrayList;
 
@@ -12,7 +13,7 @@ public class PlayManager extends LevelObject {
     private boolean isPlaying = true;
     private float currentTime = 0;
     private final float noteSpeedMultiplier = 0.5f;
-    private final float floorGraceTime = 10f;
+    private final float floorGraceTime = 25f;
     private static final float startWidth = 300f;
 
     ArrayList<PausePlayState> pauseHandlers = new ArrayList<>();
@@ -70,7 +71,7 @@ public class PlayManager extends LevelObject {
         return time * getNoteSpeedMultiplier();
     }
 
-    public float calculateHealth() {
+    public float calculateHealth() throws SlickException {
         return level.building.getLastFloor().getWidth() / startWidth;
     }
 }

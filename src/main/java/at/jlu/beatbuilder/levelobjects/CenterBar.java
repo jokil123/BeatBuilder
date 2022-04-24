@@ -4,6 +4,7 @@ import at.jlu.beatbuilder.applicationstates.BeatBuilderLevel;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 
 import java.util.ArrayList;
 
@@ -15,7 +16,7 @@ public class CenterBar extends LevelObject {
     }
 
     @Override
-    public void render(GameContainer gc, Graphics g) {
+    public void render(GameContainer gc, Graphics g) throws SlickException {
         g.setColor(Color.red);
         g.fillRect(gc.getWidth() / 2f - width / 2f, 0, width, gc.getHeight());
 
