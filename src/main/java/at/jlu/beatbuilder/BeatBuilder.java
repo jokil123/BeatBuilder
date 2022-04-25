@@ -17,6 +17,8 @@ public class BeatBuilder extends StateBasedGame {
 
     public static final float MUSIC_VOLUME = 0.05f;
 
+    public Music music;
+
     public BeatBuilder(String title) {
         super(title);
     }

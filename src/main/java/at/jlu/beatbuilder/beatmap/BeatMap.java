@@ -2,6 +2,7 @@ package at.jlu.beatbuilder.beatmap;
 
 import at.jlu.beatbuilder.applicationstates.BeatBuilderLevel;
 import at.jlu.beatbuilder.levelobjects.LevelObject;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 
@@ -35,6 +36,10 @@ public class BeatMap {
 
     public Music getBeatmapMusic() throws SlickException {
         return new Music("maps/" + name + "/audio.wav");
+    }
+
+    public Image getCover() throws SlickException {
+        return new Image("maps/" + name + "/cover.png");
     }
 
     public BeatMap(String beatMapName, BeatBuilderLevel level) throws IOException {

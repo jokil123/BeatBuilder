@@ -10,9 +10,9 @@ import org.newdawn.slick.state.StateBasedGame;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class BeatBuilderLevel extends BasicGameState {
+public class BeatBuilderLevel extends BasicGameState implements MusicListener {
     public static final int ID = 2;
-    private StateBasedGame sbg;
+    private BeatBuilder game;
 
     public PlayManager playManager;
 
@@ -69,7 +69,7 @@ public class BeatBuilderLevel extends BasicGameState {
     public void loadLevel(String levelName, StateBasedGame sbg) throws SlickException {
         clearLevel();
 
-        this.sbg = sbg;
+        this.game = (BeatBuilder) sbg;
 
         try {
             levelBeatMap = new BeatMap(levelName, this);
@@ -105,7 +105,7 @@ public class BeatBuilderLevel extends BasicGameState {
     }
 
     public void reset() throws SlickException {
-        loadLevel(levelBeatMap.name, sbg);
+        loadLevel(levelBeatMap.name, game);
     }
 
     public void clearLevel() {
@@ -115,5 +115,32 @@ public class BeatBuilderLevel extends BasicGameState {
     @Override
     public int getID() {
         return BeatBuilderLevel.ID;
+    }
+
+
+    @Override
+    public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
+        game.music.fade(250, 0, true);
+        game.music.addListener(this);
+    }
+
+    @Override
+    public void leave(GameContainer gc, StateBasedGame sbg) throws SlickException {
+
+    }
+
+
+    @Override
+    public void musicEnded(Music music) {
+        try {
+            game.music = new Music("maps/" + levelBeatMap.name + "/audio.wav");
+        } catch (SlickException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void musicSwapped(Music music, Music music1) {
+
     }
 }

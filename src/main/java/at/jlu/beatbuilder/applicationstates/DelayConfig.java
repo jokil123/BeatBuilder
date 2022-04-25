@@ -1,11 +1,13 @@
 package at.jlu.beatbuilder.applicationstates;
 
+import at.jlu.beatbuilder.BeatBuilder;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class DelayConfig extends BasicGameState {
     public static final int ID = 3;
+    private BeatBuilder game;
 
     private float cursorLoopTime = 1000f;
     private float cursorSpeedMultiplier = 0.5f;
@@ -22,7 +24,7 @@ public class DelayConfig extends BasicGameState {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-
+        game = (BeatBuilder) stateBasedGame;
     }
 
     @Override
