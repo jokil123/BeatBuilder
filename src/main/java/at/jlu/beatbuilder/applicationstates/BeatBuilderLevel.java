@@ -80,9 +80,9 @@ public class BeatBuilderLevel extends BasicGameState {
 
         sbg.enterState(BeatBuilderLevel.ID);
 
-//        new ParallaxBackground(gameObjects);
-
         new Sky(gameObjects, this);
+
+        new ParallaxBackground(gameObjects, this);
 
         new Grid(gameObjects, this);
 

@@ -88,4 +88,8 @@ public class Building extends LevelObject {
             return rightPosition - leftPosition;
         }
     }
+
+    public float getBuildingHeight() {
+        return floorsList.size() * Floor.FLOOR_HEIGHT;
+    }
 }
